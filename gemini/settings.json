@@ -1,0 +1,43 @@
+{
+  "ide": {
+    "hasSeenNudge": true
+  },
+  "mcp": {
+    "allowed": [
+      "codegraph",
+      "code-review-graph",
+      "gitnexus"
+    ]
+  },
+  "mcpServers": {
+    "codegraph": {
+      "command": "codegraph",
+      "args": [
+        "serve",
+        "--mcp"
+      ],
+      "timeout": 30000,
+      "trust": true
+    },
+    "code-review-graph": {
+      "command": "/home/borisov/.local/bin/code-review-graph",
+      "args": [
+        "serve",
+        "--tools",
+        "get_minimal_context_tool,get_review_context_tool,get_impact_radius_tool,query_graph_tool,traverse_graph_tool,semantic_search_nodes_tool,detect_changes_tool,build_or_update_graph_tool"
+      ],
+      "timeout": 30000,
+      "trust": true
+    },
+    "gitnexus": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "gitnexus@1.4.1",
+        "mcp"
+      ],
+      "timeout": 30000,
+      "trust": true
+    }
+  }
+}
