@@ -1,26 +1,45 @@
-# code-review-graph
+# Code-Review-Graph — Structural Intelligence
 
 [← Back to gemini.md](./gemini.md)
 
-Use for:
-- review preparation
-- changed-files analysis
-- minimal structural context
-- impact radius around a change
-- semantic node search in a token-constrained flow
+**IMPORTANT: ALWAYS use the code-review-graph MCP tools BEFORE using Grep/Glob/Read to explore the codebase.** The graph is faster, cheaper, and provides structural context (callers, dependents, test coverage) that file scanning cannot.
 
-Preferred first calls:
-- `get_minimal_context_tool` first for reviews, debugging, and architecture questions.
-- `detect_changes_tool` for local diffs or pre-merge review.
-- `get_review_context_tool` after minimal context if the task is still unclear.
-- `get_impact_radius_tool` before changing behavior tied to reviewed files.
+### When to use graph tools FIRST
 
-Usage rules adapted from the upstream playbook:
-- First call `get_minimal_context_tool`.
+- **Exploring code**: `semantic_search_nodes` or `query_graph` instead of Grep.
+- **Understanding impact**: `get_impact_radius` instead of manually tracing imports.
+- **Code review**: `detect_changes` + `get_review_context` instead of reading entire files.
+- **Finding relationships**: `query_graph` with callers_of/callees_of/imports_of/tests_for.
+- **Architecture questions**: `get_architecture_overview` + `list_communities`.
+
+Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
+
+### Key Tools Reference
+
+| Tool | Use when |
+|------|----------|
+| `detect_changes` | Reviewing code changes — gives risk-scored analysis. |
+| `get_review_context` | Need source snippets for review — token-efficient. |
+| `get_impact_radius` | Understanding blast radius of a change. |
+| `get_affected_flows` | Finding which execution paths are impacted. |
+| `query_graph` | Tracing callers, callees, imports, tests, dependencies. |
+| `semantic_search_nodes` | Finding functions/classes by name or keyword. |
+| `get_architecture_overview` | Understanding high-level codebase structure. |
+| `refactor_tool` | Planning renames, finding dead code. |
+
+### Workflow
+
+1. The graph auto-updates on file changes (via hooks).
+2. Use `detect_changes` for code review.
+3. Use `get_affected_flows` to understand impact.
+4. Use `query_graph` pattern="tests_for" to check coverage.
+
+### Usage Notes
 - Keep detail level minimal unless more detail is clearly needed.
 - Prefer focused `query_graph_tool` lookups over broad enumeration.
 - Use the next-step suggestions returned by the tool when available.
-- Aim to solve the task in a small number of graph calls. Используйте `repo_root`, если индекс не найден автоматически.
+- Используйте `repo_root`, если индекс не найден автоматически.
+
 
 Rebuild/update when needed:
 - `/home/borisov/.local/bin/code-review-graph build`

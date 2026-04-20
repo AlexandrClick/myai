@@ -10,3 +10,15 @@
 5. If any server reports stale or missing index, tell the user and use the matching rebuild command.
 6. Do not treat graph outputs as product requirements; use them for code structure, dependencies, execution flow, and change risk.
 7. If graph tools disagree, prefer the most specific result, then verify with direct file reads.
+
+## Repository Initialization & Maintenance
+
+If the repository is not yet initialized with index tools (GitNexus, Codegraph, or Code-Review-Graph):
+1. Run `npx gitnexus analyze`.
+2. Delete `CLAUDE.md` and `AGENTS.md` (to keep the repository clean, as rules are applied globally from `~/.gemini/`).
+3. Rename `.claude/` to `.agent/` (Antigravity's standard skill location).
+4. Run `codegraph init -i`.
+5. Run `code-review-graph install -y --no-hooks --no-skills --no-instructions`.
+6. Run `code-review-graph build`.
+7. Add `.gitnexus`, `.code-review-graph/`, `.agent`, `.codegraph` into `.gitignore`.
+

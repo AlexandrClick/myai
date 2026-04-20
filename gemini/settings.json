@@ -20,7 +20,7 @@
       "trust": true
     },
     "code-review-graph": {
-      "command": "/home/borisov/.local/bin/code-review-graph",
+      "command": "code-review-graph",
       "args": [
         "serve",
         "--tools",
